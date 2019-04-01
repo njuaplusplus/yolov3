@@ -2,6 +2,7 @@ import os
 
 from utils.parse_config import *
 from utils.utils import *
+from utils.logic import post_predict_transform
 
 ONNX_EXPORT = False
 
@@ -128,7 +129,8 @@ class YOLOLayer(nn.Module):
         p = p.view(bs, self.nA, self.nC + 5, nG, nG).permute(0, 1, 3, 4, 2).contiguous()  # prediction
 
         if self.training:
-            return p
+            return post_predict_transform(p, self.grid_xy, self.anchor_wh, self.stride, self.nC)
+            # return p
 
         elif ONNX_EXPORT:
             grid_xy = self.grid_xy.repeat((1, self.nA, 1, 1, 1)).view((1, -1, 2))
