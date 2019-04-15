@@ -131,7 +131,7 @@ class YOLOLayer(nn.Module):
         p = p.view(bs, self.nA, self.nC + 5, nG, nG).permute(0, 1, 3, 4, 2).contiguous()  # prediction
 
         if self.training:
-            return post_predict_transform(p, self.grid_xy, self.anchor_wh, self.stride, self.nC)
+            return post_predict_transform(p, self.grid_xy, self.anchor_wh, self.stride, self.nC, bs)
             # return p
 
         elif ONNX_EXPORT:
