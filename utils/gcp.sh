@@ -10,8 +10,8 @@ sudo reboot now
 
 # Re-clone
 sudo rm -rf yolov3
-# git clone https://github.com/ultralytics/yolov3  # master
-git clone -b map_update --depth 1 https://github.com/ultralytics/yolov3 yolov3  # branch
+git clone https://github.com/ultralytics/yolov3  # master
+# git clone -b test --depth 1 https://github.com/ultralytics/yolov3 yolov3_test  # branch
 cp -r weights yolov3
 cp -r cocoapi/PythonAPI/pycocotools yolov3
 cd yolov3
@@ -30,7 +30,7 @@ python3 test.py --save-json
 
 # Git pull
 git pull https://github.com/ultralytics/yolov3  # master
-git pull https://github.com/ultralytics/yolov3 map_update  # branch
+git pull https://github.com/ultralytics/yolov3 test  # branch
 
 # Test Darknet training
 python3 test.py --weights ../darknet/backup/yolov3.backup
@@ -45,11 +45,14 @@ wget https://storage.googleapis.com/ultralytics/yolov3/best_v1_0.pt -O weights/b
 
 # Debug/Development
 sudo rm -rf yolov3
-# git clone https://github.com/ultralytics/yolov3  # master
-git clone -b map_update --depth 1 https://github.com/ultralytics/yolov3 yolov3  # branch
+git clone https://github.com/ultralytics/yolov3  # master
+# git clone -b test --depth 1 https://github.com/ultralytics/yolov3 yolov3_test  # branch
 cp -r weights yolov3
 cp -r cocoapi/PythonAPI/pycocotools yolov3
 cd yolov3
+python3 test.py --save-json
 
-#git pull https://github.com/ultralytics/yolov3 map_update  # branch
-python3 test.py --img-size 320
+git pull https://github.com/ultralytics/yolov3
+python3 train.py --data-cfg data/coco_1img.data
+
+
