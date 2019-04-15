@@ -353,6 +353,8 @@ def non_max_suppression(prediction, conf_thres=0.5, nms_thres=0.4):
         # shape_likelihood[:, c] =
         #   multivariate_normal.pdf(x, mean=mat['class_mu'][c, :2], cov=mat['class_cov'][c, :2, :2])
 
+        # recover the probability of octagon
+        prediction[...,-1] = torch.exp(prediction[...,-1])
         # Filter out confidence scores below threshold
         class_conf, class_pred = pred[:, 5:].max(1)
         # pred[:, 4] *= class_conf

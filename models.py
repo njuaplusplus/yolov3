@@ -158,6 +158,8 @@ class YOLOLayer(nn.Module):
             return torch.cat((xy / nG, wh, p_conf, p_cls), 2).squeeze().t()
 
         else:  # inference
+            return post_predict_transform(p, self.grid_xy, self.anchor_wh, self.stride, self.nC, bs)
+
             p[..., 0:2] = torch.sigmoid(p[..., 0:2]) + self.grid_xy  # xy
             p[..., 2:4] = torch.exp(p[..., 2:4]) * self.anchor_wh  # wh yolo method
             # p[..., 2:4] = ((torch.sigmoid(p[..., 2:4]) * 2) ** 2) * self.anchor_wh  # wh power method
